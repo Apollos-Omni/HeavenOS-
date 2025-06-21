@@ -3,12 +3,15 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   Alert,
   ScrollView,
   Image,
   FlatList,
+  StyleSheet,
+  Platform,
 } from 'react-native';
+import AnimatedPressable from '../components/AnimatedPressable';
+import TextInputWithValidation from '../components/TextInputWithValidation';
 import { db } from '../firebase/config';
 import {
   collection,
@@ -30,7 +33,12 @@ export default function VisionBoard() {
   const [visions, setVisions] = useState<any[]>([]);
   const user = useAuthStore(state => state.user);
 
-  // Fetch visions on mount and after each submission/deletion
+  const canSubmit = title.trim().length > 0 && description.trim().length > 0;
+
+  useEffect(() => {
+    fetchVisions();
+  }, []);
+
   const fetchVisions = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, 'visions'));
@@ -44,15 +52,9 @@ export default function VisionBoard() {
     }
   };
 
-  useEffect(() => {
-    fetchVisions();
-  }, []);
-
-  // Submit new vision with optional image upload and karma rewards
   const handleSubmit = async () => {
     try {
       let imageUrl = null;
-
       if (image) {
         imageUrl = await pickAndUploadImage('visions');
       }
@@ -65,7 +67,6 @@ export default function VisionBoard() {
         timestamp: serverTimestamp(),
       });
 
-      // 🚀 Reward user
       await incrementKarma(user.uid, 10);
       await incrementInfluence(user.uid, 5);
 
@@ -73,15 +74,12 @@ export default function VisionBoard() {
       setTitle('');
       setDescription('');
       setImage(null);
-
-      // Refresh list
       fetchVisions();
     } catch (error: any) {
       Alert.alert('Error', error.message || 'Something went wrong.');
     }
   };
 
-  // Delete post if user has permission
   const handleDelete = async (postId: string) => {
     if (canModerate(user.role)) {
       try {
@@ -97,82 +95,112 @@ export default function VisionBoard() {
     }
   };
 
-  // Select and upload image for vision
   const handleSelectImage = async () => {
     try {
-      const uploadedImage = await pickAndUploadImage('visions');
-      if (uploadedImage) setImage(uploadedImage);
+      const uploaded = await pickAndUploadImage('visions');
+      if (uploaded) setImage(uploaded);
     } catch (error: any) {
       Alert.alert('Image Upload Failed', error.message);
     }
   };
 
-  return (
-    <ScrollView
-      className="bg-black p-4"
-      contentContainerStyle={{ paddingBottom: 40 }}
-    >
-      <Text className="text-white text-2xl mb-4">Share Your Vision</Text>
+  const handleRemoveImage = () => setImage(null);
 
-      <TextInput
-        placeholder="Title"
+  return (
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }}>
+      <Text style={styles.header}>Share Your Vision</Text>
+
+      <TextInputWithValidation
+        label="Title"
         value={title}
         onChangeText={setTitle}
-        className="bg-white mb-2 p-2 rounded"
-        placeholderTextColor="#999"
+        maxLength={100}
       />
-
-      <TextInput
-        placeholder="Description"
+      <TextInputWithValidation
+        label="Description"
         value={description}
         onChangeText={setDescription}
-        className="bg-white mb-4 p-2 rounded"
-        placeholderTextColor="#999"
+        maxLength={500}
         multiline
-        numberOfLines={4}
       />
 
-      <Button title="Select Image" onPress={handleSelectImage} />
+      <AnimatedPressable onPress={handleSelectImage} style={styles.button}>
+        <Text style={styles.buttonText}>Select Image</Text>
+      </AnimatedPressable>
 
       {image && (
-        <Image
-          source={{ uri: image }}
-          style={{ width: '100%', height: 200, marginTop: 10, borderRadius: 8 }}
-          resizeMode="cover"
-        />
+        <View style={styles.imageWrapper}>
+          <Image source={{ uri: image }} style={styles.image} />
+          <AnimatedPressable onPress={handleRemoveImage} style={styles.removeButton}>
+            <Text style={styles.removeText}>Remove Image</Text>
+          </AnimatedPressable>
+        </View>
       )}
 
-      <View style={{ marginTop: 16, marginBottom: 24 }}>
-        <Button title="Submit Vision" onPress={handleSubmit} color="#a855f7" />
-      </View>
+      <AnimatedPressable
+        disabled={!canSubmit}
+        onPress={handleSubmit}
+        style={[styles.button, !canSubmit && styles.disabledButton]}
+      >
+        <Text style={styles.buttonText}>Submit Vision</Text>
+      </AnimatedPressable>
 
-      <Text className="text-white text-xl mb-2">Your Visions</Text>
+      <Text style={styles.sectionTitle}>Your Visions</Text>
 
       <FlatList
         data={visions}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <View className="bg-gray-800 p-4 my-2 rounded">
-            <Text className="text-white text-lg font-bold">{item.title}</Text>
-            <Text className="text-white mb-2">{item.description}</Text>
+          <View style={styles.visionCard}>
+            <Text style={styles.visionTitle}>{item.title}</Text>
+            <Text style={styles.visionDesc}>{item.description}</Text>
             {item.imageUrl && (
-              <Image
-                source={{ uri: item.imageUrl }}
-                style={{ width: '100%', height: 150, borderRadius: 8, marginBottom: 8 }}
-                resizeMode="cover"
-              />
+              <Image source={{ uri: item.imageUrl }} style={styles.visionImage} resizeMode="cover" />
             )}
             {canModerate(user.role) && (
-              <Button
-                title="Delete Post"
-                onPress={() => handleDelete(item.id)}
-                color="red"
-              />
+              <AnimatedPressable onPress={() => handleDelete(item.id)} style={styles.deleteBtn}>
+                <Text style={styles.deleteText}>Delete Post</Text>
+              </AnimatedPressable>
             )}
           </View>
         )}
-        scrollEnabled={false} // Scroll handled by ScrollView parent
+        scrollEnabled={false}
       />
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#000', padding: 20 },
+  header: { color: '#a855f7', fontSize: 24, fontWeight: '700', marginBottom: 20 },
+  sectionTitle: { color: '#fff', fontSize: 20, fontWeight: '600', marginTop: 20, marginBottom: 10 },
+  button: {
+    backgroundColor: '#9333ea',
+    padding: 14,
+    borderRadius: 8,
+    marginVertical: 12,
+  },
+  disabledButton: { backgroundColor: '#5b21b6' },
+  buttonText: { color: '#fff', fontWeight: '700', textAlign: 'center', fontSize: 16 },
+  imageWrapper: { marginVertical: 12, alignItems: 'center' },
+  image: { width: '100%', height: 200, borderRadius: 10 },
+  removeButton: {
+    marginTop: 8,
+    backgroundColor: '#ef4444',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  removeText: { color: '#fff', fontWeight: '600' },
+  visionCard: { backgroundColor: '#1f2937', padding: 16, borderRadius: 10, marginBottom: 12 },
+  visionTitle: { color: '#fff', fontSize: 18, fontWeight: '700' },
+  visionDesc: { color: '#d1d5db', marginTop: 4, marginBottom: 8 },
+  visionImage: { width: '100%', height: 150, borderRadius: 8, marginBottom: 8 },
+  deleteBtn: {
+    backgroundColor: '#dc2626',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  deleteText: { color: '#fff', fontWeight: '600', textAlign: 'center' },
+});
