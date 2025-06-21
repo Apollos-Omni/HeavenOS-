@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // USERS
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth.uid == userId;
+    }
+
+    // VISIONS
+    match /visions/{visionId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null &&
+        (request.auth.uid == resource.data.userId ||
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['moderator', 'admin', 'founder']);
+    }
+
+    // COMMENTS
+    match /comments/{visionId}/{commentId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // VOTES
+    match /votes/{contextId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // DROPS
+    match /drops/{dropId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // VISION TRAILS
+    match /visionTrails/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth.uid == userId;
+    }
+
+    // CONSTITUTION
+    match /constitution {
+      allow read: if true;
+      allow write: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'founder';
+    }
+
+    // MirrorBoard 
+    match /mirrorBoard/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // DreamAuctions
+    match /dreamAuctions/{auctionId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    // LegacyVisions
+    match /legacyVisions/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // KarmaStats
+    match /karmaStats/{userId} {
+      allow read: if true;
+      allow write: if request.auth.uid == userId;
+    }
+    
+    // EquityMatrix
+    match /equityMatrix/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+  }
+}
+

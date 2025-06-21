@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "MPHApp",
+    "slug": "MPHApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "mphapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.apollosdesign.company",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "mphapp-68c15"
+      },
+      "firebase": {
+        "apiKey": "AIzaSyC2zB0uRe_0G0QPr4wCY4mtFyQyJP-m6Bc",
+        "authDomain": "mphapp-68c15.firebaseapp.com",
+        "projectId": "mphapp-68c15",
+        "storageBucket": "mphapp-68c15.appspot.com",
+        "messagingSenderId": "482051717590",
+        "appId": "1:482051717590:android:b3004fc3f4c69c7099cc77"
+      },
+      "environment": "development"
+    }
+  }
+}
