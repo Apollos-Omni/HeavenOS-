@@ -1,0 +1,27 @@
+// firestore/raffle/drawWinner.ts
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+
+export const drawWinner = async (raffleId: string) => {
+  const raffleRef = doc(db, "raffles", raffleId);
+  const raffleSnap = await getDoc(raffleRef);
+
+  if (!raffleSnap.exists()) throw new Error("Raffle not found");
+
+  const raffle = raffleSnap.data();
+  if (raffle.status === "closed") throw new Error("Raffle already closed");
+
+  const tickets = raffle.tickets || [];
+  if (tickets.length === 0) throw new Error("No entries");
+
+  const randomIndex = Math.floor(Math.random() * tickets.length);
+  const winner = tickets[randomIndex];
+
+  await updateDoc(raffleRef, {
+    status: "closed",
+    winner,
+    closedAt: new Date().toISOString(),
+  });
+
+  return winner;
+};

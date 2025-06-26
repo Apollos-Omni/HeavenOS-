@@ -1,0 +1,44 @@
+{
+    "firestore": {
+      "rules": "firestore.rules"
+
+      {
+        "karmaStats": {
+          "uid123": {
+            "contributions": 56,
+            "fulfilledVisions": 12,
+            "integrityScore": 89,
+            "currentRole": "Mentor"
+          }
+        }
+      }      
+      
+      {
+        "skills": {
+          "coding": {
+            "level": 3,
+            "xp": 750,
+            "nextMilestone": 1000
+          },
+          "publicSpeaking": {
+            "level": 1,
+            "xp": 250,
+            "nextMilestone": 500
+          }
+        },
+        "lastUpdated": "2025-06-20T19:10:00Z"
+      }
+      
+      {
+        "legacyVisions": {
+          "visionary123": {
+            "dream": "A global seed vault in every desert.",
+            "torchBearer": "uid456",
+            "status": "In Progress"
+          }
+        }
+      }
+      
+    }
+  }
+  
