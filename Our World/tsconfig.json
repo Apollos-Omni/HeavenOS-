@@ -11,14 +11,32 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["jest", "react", "react-native"],
+    "types": [
+      "jest",
+      "react",
+      "react-native"
+    ],
     "baseUrl": "./",
     "paths": {
-      "@screens/*": ["screens/*"],
-      "@components/*": ["components/*"],
-      "@store/*": ["store/*"],
-      "@navigation/*": ["navigation/*"]
+      "@screens/*": [
+        "screens/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@store/*": [
+        "store/*"
+      ],
+      "@navigation/*": [
+        "navigation/*"
+      ]
     }
   },
-  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ],
+  "extends": "expo/tsconfig.base"
 }
