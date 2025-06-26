@@ -1,0 +1,56 @@
+🔥 Firestore Root
+├── users (collection)
+│   └── {uid} (doc)
+│       └── karma: number
+│       └── trustScore: number
+│       └── role: string
+│       └── createdAt: timestamp
+│
+├── visions (collection)
+│   └── {visionId} (doc)
+│       └── title: string
+│       └── description: string
+│       └── imageUrl: string
+│       └── userId: string
+│       └── topBidder: string
+│       └── status: string # ["open", "pending_sponsorship", "completed"]
+│       └── timestamp: timestamp
+│
+├── realityQuests (collection)
+│   └── {questId} (doc)
+│       └── title: string
+│       └── description: string
+│       └── karmaReward: number
+│       └── assignedTo: string (optional)
+│       └── completedBy: string (optional)
+│       └── status: string # ["available", "in_progress", "completed"]
+│       └── timestamp: timestamp
+│
+├── karmaTrail (collection)
+│   └── {uid} (doc)
+│       └── entries (subcollection)
+│           └── {entryId} (doc)
+│               └── title: string
+│               └── description: string
+│               └── type: string # ["vision", "quest", "donation"]
+│               └── karmaDelta: number
+│               └── timestamp: timestamp
+│
+├── mentors (collection)
+│   └── {uid} (doc)
+│       └── message: string
+│       └── mood: string # ["calm", "inspired", "stern"]
+│       └── updatedAt: timestamp
+│
+├── karmaHotspots (collection)
+│   └── {spotId} (doc)
+│       └── title: string
+│       └── lat: number
+│       └── lng: number
+│       └── karmaScore: number
+│       └── updatedAt: timestamp
+📦 Material Order for “Galveston Micro-Village” Sent
+🏪 Vendors Confirmed: GalvestonLocal, PipeDAO, SunDAO, GreenDAO
+💰 Auto-Invoicing Generated: $137,500
+🪙 Karma Ledger Updated: +9 contributors awarded
+🚛 Dispatch Mode: Awaiting final confirm from SunDAO

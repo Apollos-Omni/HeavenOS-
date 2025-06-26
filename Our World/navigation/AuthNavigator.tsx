@@ -28,6 +28,11 @@ export default function AuthNavigator({ user }) {
           <Stack.Screen name="MirrorBoard" component={MirrorBoardScreen} />
           <Stack.Screen name="DreamAuctions" component={DreamAuctionScreen} />
           <Stack.Screen name="Coach" component={CoachScreen} />
+
+          // AppNavigator.tsx or MPHNavigator.tsx
+          <Stack.Screen name="MPH Control" component={MPHControlPanel}/>
+          <Stack.Screen name="MPHDeviceList" component={MPHDeviceList} />
+          <Stack.Screen name="MPHControlPanel" component={MPHControlPanel} />
         </>
       )}
     </Stack.Navigator>

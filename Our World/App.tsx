@@ -10,6 +10,8 @@ import DropScreen from './screens/DropScreen';
 import HeavenWallet from './screens/HeavenWallet'; // ✅ HeavenWallet imported
 import HeavenLanding from './screens/HeavenLanding';
 import HeavenCoin from './screens/HeavenCoin';
+import VisionAuctionScreen from './screens/VisionAuctionScreen';
+import RealityQuestChainScreen from './screens/RealityQuestChainScreen';
 
 import useAuthStore from './store/useAuthStore';
 
@@ -53,6 +55,8 @@ export default function App() {
               {/* 🚪 Authentication Screens */}
               <Stack.Screen name="AuthScreen" component={AuthScreen} />
               <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+              <Stack.Screen name="VisionAuction" component={VisionAuctionScreen} options={{ title: 'Dream Auctions' }} />
+              <Stack.Screen name="RealityQuests" component={RealityQuestChainScreen} options={{ title: 'Quest Chains' }} />
             </>
           )}
         </Stack.Navigator>

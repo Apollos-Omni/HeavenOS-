@@ -1,0 +1,9 @@
+{
+  "title": "Clean Galveston Beaches",
+  "description": "Organize community beach clean-ups to restore the coastline.",
+  "imageUrl": "https://example.com/clean-beach.jpg",
+  "userId": "testUser123",
+  "topBidder": "",
+  "status": "open",
+  "timestamp": "2025-06-21T00:00:00Z"
+}

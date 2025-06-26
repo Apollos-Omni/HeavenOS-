@@ -25,6 +25,7 @@ import useAuthStore from '../store/useAuthStore';
 import { pickAndUploadImage } from '../utils/uploadImage';
 import { incrementKarma, incrementInfluence } from '../utils/karmaEngine';
 import { canModerate } from '../utils/permissions';
+import { LivingFeed } from "@/components/LivingFeed";
 
 export default function VisionBoard() {
   const [title, setTitle] = useState('');

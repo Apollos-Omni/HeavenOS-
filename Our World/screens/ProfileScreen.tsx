@@ -3,6 +3,8 @@ import { View, Text, Image } from 'react-native';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { useAuth } from '../hooks/useAuth';
+import { ReflectiveKarmaMeter } from "@/components/ReflectiveKarmaMeter";
+import KarmicAuraAvatar from "@/components/KarmicAuraAvatar";
 
 export default function ProfileScreen() {
   const { user } = useAuth();
