@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import GlobalFeed from "../screens/GlobalFeed";
 import VisionBoard from "../screens/VisionBoard";
 import ProfileScreen from "../screens/ProfileScreen";
-import ActivityBoard from "../screens/ActivitiesBoard";
+import ActivitiesBoard from "../screens/ActivitiesBoard";
 
 const Drawer = createDrawerNavigator();
 
@@ -27,7 +27,7 @@ export default function DrawerNavigator() {
             case "Profile":
               iconName = "person";
               break;
-            case "Activity Board":
+            case "Activities Board":
               iconName = "bar-chart";
               break;
             default:
@@ -41,7 +41,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Global Feed" component={GlobalFeed} />
       <Drawer.Screen name="Vision Board" component={VisionBoard} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
-      <Drawer.Screen name="Activity Board" component={ActivityBoard} />
+      <Drawer.Screen name="Activities Board" component={ActivitiesBoard} />
     </Drawer.Navigator>
   );
 }
