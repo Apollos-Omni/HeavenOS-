@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "./HeavenDAO.sol";
+
 contract HeavenCoin {
     string public name = "HeavenCoin";
     string public symbol = "HVN";
@@ -21,12 +24,15 @@ contract HeavenCoin {
 
     constructor() {
         admin = msg.sender;
+        dao = HeavenDAO(daoAddress);
+        _mint(msg.sender, 1_000_000 * 10 ** decimals());
     }
 
     function mint(address to, uint amount) external onlyAdmin {
         totalSupply += amount;
         balanceOf[to] += amount;
         emit Transfer(address(0), to, amount);
+        _mint(user, karmaAmount * 10 ** decimals());
     }
 
     function transfer(address to, uint amount) external returns (bool) {
@@ -51,5 +57,9 @@ contract HeavenCoin {
         balanceOf[to] += amount;
         emit Transfer(from, to, amount);
         return true;
+    }
+
+    function burnForPenalty(address user, uint amount) external onlyAdmin {
+        _burn(user, amount * 10 ** decimals());
     }
 }

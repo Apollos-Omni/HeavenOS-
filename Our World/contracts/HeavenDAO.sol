@@ -1,29 +1,79 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "./HeavenDAO.sol";
+contract HeavenDAO {
+    struct Proposal {
+        uint id;
+        string description;
+        address proposer;
+        uint votesFor;
+        uint votesAgainst;
+        uint deadline;
+        bool executed;
+    }
 
-contract HeavenCoin is ERC20 {
+    mapping(uint => Proposal) public proposals;
+    mapping(address => uint) public karmaBalance;
+    mapping(uint => mapping(address => bool)) public hasVoted;
+    uint public nextProposalId;
     address public admin;
-    HeavenDAO public dao;
 
     modifier onlyAdmin() {
         require(msg.sender == admin, "Only admin");
         _;
     }
 
-    constructor(address daoAddress) ERC20("HeavenCoin", "HVC") {
+    event ProposalCreated(uint id, string description, address proposer);
+    event Voted(uint proposalId, address voter, bool support);
+    event Executed(uint proposalId);
+
+    constructor() {
         admin = msg.sender;
-        dao = HeavenDAO(daoAddress);
-        _mint(msg.sender, 1_000_000 * 10 ** decimals());
     }
 
-    function mintForKarma(address user, uint karmaAmount) external onlyAdmin {
-        _mint(user, karmaAmount * 10 ** decimals());
+    function setKarma(address user, uint amount) external onlyAdmin {
+        karmaBalance[user] = amount;
     }
 
-    function burnForPenalty(address user, uint amount) external onlyAdmin {
-        _burn(user, amount * 10 ** decimals());
+    function propose(string memory description) external {
+        proposals[nextProposalId] = Proposal(
+            nextProposalId,
+            description,
+            msg.sender,
+            0,
+            0,
+            block.timestamp + 3 days,
+            false
+        );
+        emit ProposalCreated(nextProposalId, description, msg.sender);
+        nextProposalId++;
+    }
+
+    function vote(uint proposalId, bool support) external {
+        Proposal storage proposal = proposals[proposalId];
+        require(block.timestamp < proposal.deadline, "Voting ended");
+        require(!hasVoted[proposalId][msg.sender], "Already voted");
+
+        hasVoted[proposalId][msg.sender] = true;
+        uint karma = karmaBalance[msg.sender];
+        require(karma > 0, "No karma to vote");
+
+        if (support) {
+            proposal.votesFor += karma;
+        } else {
+            proposal.votesAgainst += karma;
+        }
+
+        emit Voted(proposalId, msg.sender, support);
+    }
+
+    function execute(uint proposalId) external onlyAdmin {
+        Proposal storage proposal = proposals[proposalId];
+        require(!proposal.executed, "Already executed");
+        require(block.timestamp >= proposal.deadline, "Voting not ended");
+
+        proposal.executed = true;
+        // Place execution logic here (e.g. fund transfer, on-chain settings)
+        emit Executed(proposalId);
     }
 }
