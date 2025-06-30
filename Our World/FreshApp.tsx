@@ -1,13 +1,121 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from "react-native";
 
 export default function FreshApp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
   const handleLogin = () => {
-    Alert.alert("Demo Login", `Email: ${email}\nThis is working!`);
+    if (email && password) {
+      // Simulate successful login
+      setUser({ email, name: email.split("@")[0], karma: 150 });
+      setIsLoggedIn(true);
+    } else {
+      Alert.alert("Error", "Please enter both email and password");
+    }
   };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUser(null);
+    setEmail("");
+    setPassword("");
+  };
+
+  // Show main dashboard if logged in
+  if (isLoggedIn && user) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#0f0f23",
+        }}
+      >
+        {/* Header */}
+        <View
+          style={{
+            backgroundColor: "#1a1a3a",
+            paddingTop: 50,
+            paddingBottom: 20,
+            paddingHorizontal: 20,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              color: "#ffffff",
+              marginBottom: 5,
+            }}
+          >
+            Welcome to Our World
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#a0a0ff",
+            }}
+          >
+            {user.name} • Karma: {user.karma}
+          </Text>
+        </View>
+
+        <ScrollView style={{ flex: 1, padding: 20 }}>
+          {/* Dashboard Cards */}
+          <View style={{ gap: 15 }}>
+            <DashboardCard
+              title="🌟 Vision Board"
+              description="Share your dreams and aspirations with the community"
+              color="#4f46e5"
+            />
+            <DashboardCard
+              title="🧘 Mental Wellness"
+              description="Track your mental health journey and find support"
+              color="#059669"
+            />
+            <DashboardCard
+              title="🤝 Community Hub"
+              description="Connect with others and build meaningful relationships"
+              color="#dc2626"
+            />
+            <DashboardCard
+              title="📊 Karma Dashboard"
+              description="See your impact and contribution to the community"
+              color="#7c3aed"
+            />
+            <DashboardCard
+              title="🏠 Housing Initiative"
+              description="Support housing solutions for those in need"
+              color="#ea580c"
+            />
+          </View>
+
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#374151",
+              padding: 15,
+              borderRadius: 8,
+              alignItems: "center",
+              marginTop: 30,
+              marginBottom: 20,
+            }}
+            onPress={handleLogout}
+          >
+            <Text style={{ color: "#ffffff", fontSize: 16 }}>Logout</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    );
+  }
 
   return (
     <View
