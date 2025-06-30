@@ -1,3 +1,3 @@
-import FreshApp from "./FreshApp";
+import WebLogin from "./WebLogin";
 
-export default FreshApp;
+export default WebLogin;
