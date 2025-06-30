@@ -21,7 +21,7 @@ import {
   doc,
   serverTimestamp,
 } from "firebase/firestore";
-import useAuthStore from "../store/useAuthStore";
+import useAuthStore from "../store/AuthStore";
 import { pickAndUploadImage } from "../utils/uploadImage";
 import { incrementKarma, incrementInfluence } from "../utils/karmaEngine";
 import { canModerate } from "../utils/permissions";
