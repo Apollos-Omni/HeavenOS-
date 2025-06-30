@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image } from 'react-native';
-import { getDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase/config';
-import { useAuth } from '../hooks/useAuth';
+import React, { useEffect, useState } from "react";
+import { View, Text, Image } from "react-native";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../firebase/config";
+import useAuthStore from "../store/AuthStore";
 
 export default function ProfileScreen() {
-  const { user } = useAuth();
+  const user = useAuthStore((state) => state.user);
   const [data, setData] = useState({});
 
   useEffect(() => {
     const loadData = async () => {
-      const ref = doc(db, 'users', user.uid);
+      const ref = doc(db, "users", user.uid);
       const snap = await getDoc(ref);
       setData(snap.data());
     };
