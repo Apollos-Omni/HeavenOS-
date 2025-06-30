@@ -178,6 +178,8 @@ export default function FreshApp() {
           alignItems: "center",
         }}
         onPress={handleLogin}
+        onClick={handleLogin}
+        activeOpacity={0.7}
       >
         <Text
           style={{
