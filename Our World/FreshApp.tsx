@@ -187,3 +187,40 @@ export default function FreshApp() {
     </View>
   );
 }
+
+function DashboardCard({ title, description, color }) {
+  return (
+    <TouchableOpacity
+      style={{
+        backgroundColor: color,
+        padding: 20,
+        borderRadius: 12,
+        elevation: 3,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: "bold",
+          color: "#ffffff",
+          marginBottom: 8,
+        }}
+      >
+        {title}
+      </Text>
+      <Text
+        style={{
+          fontSize: 14,
+          color: "#e5e7eb",
+          lineHeight: 20,
+        }}
+      >
+        {description}
+      </Text>
+    </TouchableOpacity>
+  );
+}
