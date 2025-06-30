@@ -15,13 +15,18 @@ export default function FreshApp() {
   const [user, setUser] = useState(null);
 
   const handleLogin = () => {
-    if (email && password) {
-      // Simulate successful login
-      setUser({ email, name: email.split("@")[0], karma: 150 });
-      setIsLoggedIn(true);
-    } else {
-      Alert.alert("Error", "Please enter both email and password");
-    }
+    console.log("Login button clicked!", { email, password });
+
+    // Accept any input (even empty) for demo purposes
+    const userName = email ? email.split("@")[0] : "Demo User";
+    setUser({
+      email: email || "demo@ourworld.com",
+      name: userName,
+      karma: 150,
+    });
+    setIsLoggedIn(true);
+
+    Alert.alert("Success!", `Welcome ${userName}! Logging you in...`);
   };
 
   const handleLogout = () => {
