@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
 import { auth } from "../firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import useAuthStore from "../store/AuthStore";
@@ -23,22 +23,45 @@ export default function AuthScreen() {
   };
 
   return (
-    <View className="flex-1 justify-center items-center bg-black px-4">
-      <Text className="text-white text-2xl mb-4">Login to Our World</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Login to Our World</Text>
       <TextInput
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        className="bg-white w-full mb-2 p-2 rounded"
+        style={styles.input}
       />
       <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
-        className="bg-white w-full mb-4 p-2 rounded"
+        style={styles.input}
         secureTextEntry
       />
       <Button title="Login" onPress={handleLogin} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000",
+    paddingHorizontal: 16,
+  },
+  title: {
+    color: "#fff",
+    fontSize: 24,
+    marginBottom: 16,
+    fontWeight: "bold",
+  },
+  input: {
+    backgroundColor: "#fff",
+    width: "100%",
+    marginBottom: 8,
+    padding: 8,
+    borderRadius: 4,
+  },
+});
