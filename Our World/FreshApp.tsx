@@ -170,6 +170,22 @@ export default function FreshApp() {
         secureTextEntry
       />
 
+      {/* Test Button */}
+      <TouchableOpacity
+        style={{
+          backgroundColor: "#dc2626",
+          padding: 10,
+          borderRadius: 4,
+          alignItems: "center",
+          marginBottom: 10,
+        }}
+        onPress={() => Alert.alert("Test", "This button works!")}
+      >
+        <Text style={{ color: "#ffffff", fontSize: 14 }}>
+          🧪 Test Button (Click Me First)
+        </Text>
+      </TouchableOpacity>
+
       <TouchableOpacity
         style={{
           backgroundColor: "#4f46e5",
