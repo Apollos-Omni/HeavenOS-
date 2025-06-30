@@ -1,6 +1,11 @@
 import React from "react";
-import TestApp from "./TestApp";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import AuthScreen from "./screens/AuthScreen";
 
 export default function App() {
-  return <TestApp />;
+  return (
+    <SafeAreaProvider>
+      <AuthScreen />
+    </SafeAreaProvider>
+  );
 }
