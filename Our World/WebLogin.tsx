@@ -40,34 +40,66 @@ export default function WebLogin() {
 
         <div style={{ display: "grid", gap: "15px", marginTop: "20px" }}>
           <div
+            onClick={() =>
+              alert(
+                "🌟 Vision Board: Create and share your dreams!\n\n• Post your visions for the future\n• Get community support\n• Track your progress",
+              )
+            }
             style={{
               backgroundColor: "#4f46e5",
               padding: "20px",
               borderRadius: "8px",
+              cursor: "pointer",
+              transition: "transform 0.2s",
             }}
+            onMouseOver={(e) => (e.target.style.transform = "scale(1.02)")}
+            onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
           >
             <h3>🌟 Vision Board</h3>
             <p>Share your dreams and aspirations</p>
+            <small style={{ opacity: 0.8 }}>Click to explore →</small>
           </div>
+
           <div
+            onClick={() =>
+              alert(
+                "🧘 Mental Wellness Hub:\n\n• Daily mood tracking\n• Meditation guides\n• Therapy resources\n• Community support groups\n• Crisis helplines",
+              )
+            }
             style={{
               backgroundColor: "#059669",
               padding: "20px",
               borderRadius: "8px",
+              cursor: "pointer",
+              transition: "transform 0.2s",
             }}
+            onMouseOver={(e) => (e.target.style.transform = "scale(1.02)")}
+            onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
           >
             <h3>🧘 Mental Wellness</h3>
             <p>Track your mental health journey</p>
+            <small style={{ opacity: 0.8 }}>Click to explore →</small>
           </div>
+
           <div
+            onClick={() =>
+              alert(
+                "🤝 Community Hub:\n\n• Connect with like-minded people\n• Join support groups\n• Local meetups\n• Volunteer opportunities\n• Peer mentorship",
+              )
+            }
             style={{
               backgroundColor: "#dc2626",
               padding: "20px",
               borderRadius: "8px",
+              cursor: "pointer",
+              transition: "transform 0.2s",
             }}
+            onMouseOver={(e) => (e.target.style.transform = "scale(1.02)")}
+            onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
           >
             <h3>🤝 Community Hub</h3>
             <p>Connect with others</p>
+            <small style={{ opacity: 0.8 }}>Click to explore →</small>
           </div>
         </div>
 
