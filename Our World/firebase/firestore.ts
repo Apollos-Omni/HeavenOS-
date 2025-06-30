@@ -1,17 +1,19 @@
 // /users/{uid}
-{
-    name: 'Apollos',
-    email: 'apollos@ourworld.com',
-    avatar: 'https://firebase.storage...',
-    country: 'USA',
-    karma: 124,
-    influence: 98,
-    visionCount: 12,
-    role: 'founder',
-    followers: ['uid123', 'uid456'],
-    timestamp: serverTimestamp()
-  }
-  // /visionTrails/{userId}
+// Example user document structure:
+// {
+//     name: 'Apollos',
+//     email: 'apollos@ourworld.com',
+//     avatar: 'https://firebase.storage...',
+//     country: 'USA',
+//     karma: 124,
+//     influence: 98,
+//     visionCount: 12,
+//     role: 'founder',
+//     followers: ['uid123', 'uid456'],
+//     timestamp: serverTimestamp()
+// }
+
+// /visionTrails/{userId}
 {
     history: [
       {
@@ -110,7 +112,7 @@
     expiration: '2025-06-14T00:00:00Z',
     status: 'active' | 'closed'
   }
-/neutralMirrors/{userId}     
+/neutralMirrors/{userId}
 {
     ownerId: 'uid123',
     memoryThreads: [
@@ -131,7 +133,7 @@
     continuationMode: 'adaptiveGPT',
     lastSynced: '2025-06-07T12:00:00Z'
   }
-/cathedrals/{userId}  
+/cathedrals/{userId}
 {
     ownerId: 'uid123',
     heavenModules: ['karma', 'coach', 'mirror', 'vision'],
@@ -145,7 +147,7 @@
       'NeuralMirror': 'syncing'
     }
   }
-/mirrorBoardPost/{postId}  
+/mirrorBoardPost/{postId}
 {
     userId: 'uid123',
     content: "Sometimes I feel like I’m building something no one understands...",
@@ -170,7 +172,7 @@
     followers: 3087,
     proposals: ['home_for_all', 'tinyhome_reform']
   }
-/homelessApplicants/{userId}    
+/homelessApplicants/{userId}
 {
   userId: 'uid456',
   name: 'John Doe',
